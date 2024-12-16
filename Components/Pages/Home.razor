@@ -1,0 +1,30 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+@inject MessageService MessageService
+<PageTitle>Home</PageTitle>
+
+<h1>Send Message!</h1>
+
+<input @bind="message" placeholder="enter message" />
+<input @bind="chatId" placeholder="enter message" />
+
+<button @onclick="SendMessage">send</button>
+
+@code{
+	private string message;
+	private string chatId;
+	private string responseMessage;
+
+	private async Task SendMessage()
+	{
+		if(!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(chatId))
+		{
+			responseMessage = await MessageService.SendMessageAsync(message, chatId);
+		}
+		else
+		{
+			responseMessage = "please enter both message and chat id";
+		}
+	}
+}
